@@ -118,6 +118,13 @@
         });
         // Fallback URL ထည့်ပေးပါ
 const backupUrl = 'https://raw.githubusercontent.com/yourusername/repo/main/backup.json';
+
+// FormSubmit အစား Google Apps Script သုံးပါ
+fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+  method: 'POST',
+  body: JSON.stringify(data)
+})
+        
     </script>
 </body>
 </html>

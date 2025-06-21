@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
     <style>
+        /* သင့် CSS styles တွေ ဒီအတိုင်းထားပါ */
         :root {
             --primary-color: #4CAF50;
             --hover-color: #45a049;
@@ -28,28 +29,6 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-        }
-        input, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: var(--hover-color);
-        }
         .success-message {
             display: none;
             color: var(--primary-color);
@@ -62,17 +41,14 @@
     <div class="container">
         <h1>Contact Us</h1>
         
-        <!-- FormSubmit Form -->
         <form id="contactForm" action="https://formsubmit.co/tart9245@gmail.com" method="POST">
-            <!-- Required FormSubmit Parameters -->
-            <input type="hidden" name="_next" value="https://tar9245.github.io/Tartar.html/thank-you.html">
+            <!-- FormSubmit Parameters -->
+            <input type="hidden" name="_next" value="https://tar9245.github.io/Trtar/thank-you.html">
             <input type="hidden" name="_subject" value="New Contact Form Submission">
             <input type="hidden" name="_captcha" value="false">
-            
-            <!-- Honeypot Field (Spam Protection) -->
             <input type="text" name="_honey" style="display:none">
             
-            <!-- User Input Fields -->
+            <!-- Form Fields -->
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email" required>
             <textarea name="message" placeholder="Your Message" required rows="5"></textarea>
@@ -80,39 +56,42 @@
             <button type="submit">Send Message</button>
         </form>
         
-        <!-- Success Message (Shown after submission) -->
         <div id="successMessage" class="success-message">
             <p>Thank you! Your message has been sent successfully.</p>
-            <p>We'll contact you soon.</p>
+            <p>Redirecting to thank you page...</p>
         </div>
     </div>
 
-    <!-- Form Submission Handling -->
+    <!-- Updated JavaScript Code -->
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Submit form data to FormSubmit
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this),
-            })
-            .then(response => {
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
                 if (response.ok) {
                     // Show success message
                     document.getElementById('contactForm').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
                     
-                    // Redirect to thank-you page after 3 seconds
+                    // Redirect after 2 seconds
                     setTimeout(() => {
-                        window.location.href = "https://tar9245.github.io/Tartar.html/thank-you.html";
-                    }, 3000);
+                        window.location.href = "https://tar9245.github.io/Trtar/thank-you.html";
+                    }, 2000);
+                } else {
+                    throw new Error('Form submission failed');
                 }
-            })
-            .catch(error => {
-                alert('Thank you For Sending Us. We are gonna check your message.');
+            } catch (error) {
                 console.error('Error:', error);
-            });
+                alert('Error: ' + error.message);
+            }
         });
     </script>
 </body>
